@@ -1,0 +1,109 @@
+<% content_for :title, "Boîtes · RE-PLAY" %>
+
+<div class="container py-4">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title"><i class="fa-solid fa-boxes-stacked me-2" style="color:#FF6B35;"></i>Boîtes</h1>
+      <p class="page-subtitle">
+        <% if params[:filter] == 'empty' %>
+          Boîtes vidées
+        <% elsif params[:filter] == 'suppr' %>
+          Boîtes jetées
+        <% else %>
+          Boîtes en cours de traitement
+        <% end %>
+      </p>
+    </div>
+    <%= link_to new_box_path, class: "btn-new-box", title: "Nouvelle boîte" do %>
+      <i class="fa-solid fa-plus"></i>
+    <% end %>
+  </div>
+
+  <div class="mb-4">
+    <div class="filter-tabs filter-tabs-boxes">
+      <%= link_to boxes_path,
+            class: "filter-tab filter-tab-box-active filter-tab-full #{'active' unless params[:filter].in?(%w[suppr empty])}" do %>
+        <i class="fa-solid fa-box"></i>
+        En cours
+        <span class="filter-count"><%= Box.active.count %></span>
+      <% end %>
+      <div class="filter-tabs-sub-row">
+        <%= link_to boxes_path(filter: "empty"),
+              class: "filter-tab filter-tab-box-empty #{'active' if params[:filter] == 'empty'}" do %>
+          <i class="fa-solid fa-box-open"></i>
+          Vides
+          <span class="filter-count"><%= Box.empty.count %></span>
+        <% end %>
+        <%= link_to boxes_path(filter: "suppr"),
+              class: "filter-tab filter-tab-box-suppr #{'active' if params[:filter] == 'suppr'}" do %>
+          <i class="fa-solid fa-dumpster"></i>
+          Jetées
+          <span class="filter-count"><%= Box.suppr.count %></span>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <% if @boxes.empty? %>
+    <div class="text-center py-5">
+      <div style="font-size: 4rem; color: rgba(255,107,53,0.2); margin-bottom: 1rem;">
+        <i class="fa-solid fa-boxes-stacked"></i>
+      </div>
+      <h3 style="color: #6B7280;">Aucune boîte ici</h3>
+      <% unless params[:filter] == 'suppr' %>
+        <%= link_to new_box_path, class: "btn btn-primary mt-2" do %>
+          <i class="fa-solid fa-plus me-1"></i>Nouvelle boîte
+        <% end %>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="row g-3">
+      <% @boxes.each do |box| %>
+        <div class="col-12 col-sm-6 col-lg-4">
+          <%= link_to box_path(box), class: "box-card d-block text-decoration-none" do %>
+            <div class="box-card-header">
+              <div class="d-flex align-items-center gap-2">
+                <% if box.suppr? %>
+                  <span class="status-dot status-dot-deleted"></span>
+                <% elsif box.empty? %>
+                  <span class="status-dot status-dot-empty"></span>
+                <% else %>
+                  <span class="status-dot status-dot-box-active"></span>
+                <% end %>
+                <span class="box-card-id">
+                  <% if box.suppr? %>
+                    <i class="fa-solid fa-dumpster me-1" style="color:#FF6B35; font-size:0.9em;"></i>
+                  <% elsif box.empty? %>
+                    <i class="fa-solid fa-box-open me-1" style="color:#FF6B35; font-size:0.9em;"></i>
+                  <% else %>
+                    <i class="fa-solid fa-box me-1" style="color:#FF6B35; font-size:0.9em;"></i>
+                  <% end %>
+                  N°&nbsp;<%= box.id %>
+                </span>
+              </div>
+            </div>
+            <div class="box-card-category"><%= box.category.name %></div>
+            <div class="box-card-details">
+              <div class="box-card-details-left">
+                <% if box.weight.present? %>
+                  <span class="box-detail-item">
+                    <i class="fa-solid fa-weight-hanging"></i><%= box.weight %> kg
+                  </span>
+                <% end %>
+                <% if box.electronic? %>
+                  <span class="box-detail-item" title="Électronique">
+                    <i class="fa-solid fa-microchip" style="color:#FF6B35; font-size:1.5em;"></i>
+                  </span>
+                <% end %>
+              </div>
+              <span class="box-toy-count" title="<%= box.toys.count %> jouet<%= 's' if box.toys.count > 1 %>">
+                <i class="fa-solid fa-puzzle-piece"></i>
+                <%= box.toys.count %>
+              </span>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>

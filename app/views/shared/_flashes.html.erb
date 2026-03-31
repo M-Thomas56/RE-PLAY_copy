@@ -1,0 +1,26 @@
+<div class="flash-container">
+  <% if notice %>
+    <div class="flash-toast flash-notice alert fade show"
+         role="alert"
+         data-controller="flash">
+      <div class="flash-icon">
+        <i class="fa-solid fa-check"></i>
+      </div>
+      <div class="flash-body">
+        <p class="flash-text"><%= notice %></p>
+      </div>
+    </div>
+  <% end %>
+  <% if alert %>
+    <div class="flash-toast flash-alert alert fade show"
+         role="alert"
+         data-controller="flash">
+      <div class="flash-icon">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+      </div>
+      <div class="flash-body">
+        <p class="flash-text"><%= alert %></p>
+      </div>
+    </div>
+  <% end %>
+</div>

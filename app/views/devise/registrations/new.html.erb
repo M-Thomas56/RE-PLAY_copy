@@ -1,0 +1,56 @@
+<% content_for :title, "Nouvel employé · RE-PLAY" %>
+
+<div class="container py-4">
+  <div class="d-flex align-items-center justify-content-between mb-3">
+    <%= link_to users_path, class: "btn-back-boxes" do %>
+      <i class="fa-solid fa-circle-arrow-left"></i>
+      <i class="fa-solid fa-users btn-back-context-icon"></i>
+    <% end %>
+  </div>
+
+  <div class="detail-card p-4" style="max-width:480px; margin:0 auto;">
+    <div class="d-flex align-items-center gap-3 mb-4">
+      <div class="form-card-icon" style="margin-bottom:0; flex-shrink:0;">
+        <i class="fa-solid fa-user-plus"></i>
+      </div>
+      <div>
+        <h1 class="toy-show-title" style="font-size:1.5rem; margin-bottom:0;">Nouvel employé</h1>
+        <div style="font-size:0.85rem; color:#9CA3AF; margin-top:0.15rem;">Créer un accès à RE-PLAY</div>
+      </div>
+    </div>
+
+    <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+      <%= f.error_notification message: f.object.errors.full_messages.to_sentence,
+            wrapper_html: { class: "alert", style: "background:rgba(230,57,70,0.08);color:#E63946;border-radius:0.75rem;padding:0.75rem 1rem;margin-bottom:1rem;font-size:0.875rem;font-weight:600;" } %>
+
+      <div class="mb-3">
+        <%= f.input :email,
+          label: "Adresse e-mail",
+          required: true,
+          autofocus: true,
+          input_html: { autocomplete: "email", class: "form-control verify-input", placeholder: "employe@enjoue.fr" },
+          label_html: { class: "form-label" } %>
+      </div>
+      <div class="mb-3">
+        <%= f.input :password,
+          label: "Mot de passe",
+          required: true,
+          hint: ("#{@minimum_password_length} caractères minimum" if @minimum_password_length),
+          input_html: { autocomplete: "new-password", class: "form-control verify-input", placeholder: "••••••••" },
+          label_html: { class: "form-label" } %>
+      </div>
+      <div class="mb-4">
+        <%= f.input :password_confirmation,
+          label: "Confirmer le mot de passe",
+          required: true,
+          input_html: { autocomplete: "new-password", class: "form-control verify-input", placeholder: "••••••••" },
+          label_html: { class: "form-label" } %>
+      </div>
+      <div class="d-grid">
+        <button type="submit" class="btn btn-primary btn-lg">
+          <i class="fa-solid fa-check" style="font-size:1.5rem;"></i>
+        </button>
+      </div>
+    <% end %>
+  </div>
+</div>

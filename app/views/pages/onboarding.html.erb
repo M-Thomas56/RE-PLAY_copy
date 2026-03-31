@@ -1,0 +1,138 @@
+<% content_for :title, "Guide d'utilisation · RE-PLAY" %>
+
+<div class="container py-4">
+<%# ── HERO ──────────────────────────────────────────────────────────── %>
+<div class="onboarding-hero">
+  <div class="container py-3 text-center text-white">
+    <span class="badge onboarding-badge mb-3 px-3 py-2 fs-6">RE-PLAY × ENJOUÉ</span>
+    <h1 class="display-4 fw-bold mb-3">Bienvenue sur <span class="text-coral text-nowrap">RE-PLAY</span></h1>
+  </div>
+</div>
+
+  <%# ── En-tête ── %>
+  <div class="text-center mb-4">
+    <%= link_to enjoue_path do %>
+      <%= image_tag "ENJOUE_RVB_2022.png", class: "onb-logo mb-3", alt: "Enjoué" %>
+    <% end %>
+    <p class="onb-intro-text">
+      ENJOUÉ donne une seconde vie aux jouets pour rendre le jeu plus responsable et accessible à tous.
+      En choisissant des jouets reconditionnés, particuliers, professionnels de l'enfance et entreprises
+      réduisent la surproduction, limitent la pollution et soutiennent l'emploi durable.
+    </p>
+  </div>
+
+  <%# ── Notre mission ── %>
+  <div class="onb-section-title">
+    <span class="onb-section-bar"></span>
+    <h2>Notre mission</h2>
+  </div>
+
+  <div class="row g-3 mb-4">
+    <div class="col-12 col-md-4">
+      <div class="detail-card p-4 h-100">
+        <div class="onb-icon-wrap onb-icon-coral mb-3">
+          <i class="fa-solid fa-barcode"></i>
+        </div>
+        <h5 class="onb-card-title">Traçabilité digitale</h5>
+        <p class="onb-card-text">
+          Fini les tableurs et la saisie papier. RE-PLAY centralise les stocks et suit chaque jouet par création d'une photo horodatée.
+        </p>
+      </div>
+    </div>
+    <div class="col-12 col-md-4">
+      <div class="detail-card p-4 h-100">
+        <div class="onb-icon-wrap onb-icon-mint mb-3">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </div>
+        <h5 class="onb-card-title">Contrôle qualité</h5>
+        <p class="onb-card-text">
+          Chaque jouet est évalué selon son état — propreté, complétude, fonctionnalité — avant d'être validé et remis en circulation.
+        </p>
+      </div>
+    </div>
+    <div class="col-12 col-md-4">
+      <div class="detail-card p-4 h-100">
+        <div class="onb-icon-wrap onb-icon-sky mb-3">
+          <i class="fa-solid fa-robot"></i>
+        </div>
+        <h5 class="onb-card-title">Prix assisté par IA</h5>
+        <p class="onb-card-text">
+          L'intelligence artificielle analyse chaque jouet et propose automatiquement un prix de revente cohérent avec le marché.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <%# ── Comment ça marche ── %>
+  <div class="onb-section-title">
+    <span class="onb-section-bar"></span>
+    <h2>Comment ça marche</h2>
+  </div>
+
+  <div class="detail-card p-4 mb-4">
+    <div class="onb-steps">
+      <div class="onb-step">
+        <div class="onb-step-dot onb-step-dot-coral"><i class="fa-solid fa-box-open"></i></div>
+        <div class="onb-step-body">
+          <div class="onb-step-label">Réception</div>
+          <div class="onb-step-desc">Une boîte de dons arrive — tu crées une fiche boîte et tu scannes chaque jouet dedans.</div>
+        </div>
+      </div>
+      <div class="onb-step-line"></div>
+      <div class="onb-step">
+        <div class="onb-step-dot onb-step-dot-yellow"><i class="fa-solid fa-camera"></i></div>
+        <div class="onb-step-body">
+          <div class="onb-step-label">Photo & état</div>
+          <div class="onb-step-desc">Tu prends une photo du jouet et tu renseignes son état : propre, complet, jouable.</div>
+        </div>
+      </div>
+      <div class="onb-step-line"></div>
+      <div class="onb-step">
+        <div class="onb-step-dot onb-step-dot-sky"><i class="fa-solid fa-robot"></i></div>
+        <div class="onb-step-body">
+          <div class="onb-step-label">Prix IA</div>
+          <div class="onb-step-desc">L'IA calcule automatiquement un prix de revente basé sur la photo et l'état.</div>
+        </div>
+      </div>
+      <div class="onb-step-line"></div>
+      <div class="onb-step">
+        <div class="onb-step-dot onb-step-dot-mint"><i class="fa-solid fa-circle-check"></i></div>
+        <div class="onb-step-body">
+          <div class="onb-step-label">Validation</div>
+          <div class="onb-step-desc">Un admin contrôle et valide le jouet — il est prêt à être mis en vente.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%# ── Notre équipe ── %>
+  <div class="onb-section-title">
+    <span class="onb-section-bar"></span>
+    <h2>Notre équipe</h2>
+  </div>
+
+  <div class="row g-3 mb-2">
+    <div class="col-12 col-md-4">
+      <%= link_to cyrille_pierre_path, class: "detail-card p-4 text-center onb-team-card" do %>
+        <%= image_tag "cyrille", alt: "Cyrille Pierre", class: "onb-avatar mb-3" %>
+        <div class="onb-team-name">Cyrille Pierre</div>
+        <div class="onb-team-role">Commercial, expert opérationnel</div>
+      <% end %>
+    </div>
+    <div class="col-12 col-md-4">
+      <%= link_to marc_thomas_path, class: "detail-card p-4 text-center onb-team-card" do %>
+        <%= image_tag "marc", alt: "Marc Thomas", class: "onb-avatar mb-3" %>
+        <div class="onb-team-name">Marc Thomas</div>
+        <div class="onb-team-role">Lead developper</div>
+      <% end %>
+    </div>
+    <div class="col-12 col-md-4">
+      <%= link_to loic_laplagne_path, class: "detail-card p-4 text-center onb-team-card" do %>
+        <%= image_tag "loic", alt: "Loïc Laplagne", class: "onb-avatar mb-3" %>
+        <div class="onb-team-name">Loïc Laplagne</div>
+        <div class="onb-team-role">Designer</div>
+      <% end %>
+    </div>
+  </div>
+
+</div>

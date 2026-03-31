@@ -1,0 +1,212 @@
+.navbar-replay {
+  background: $white;
+  box-shadow: 0 2px 12px rgba(26, 43, 74, 0.07);
+  padding: 0.6rem 0;
+
+  .navbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: $headers-font;
+    font-size: 1.5rem;
+    color: $coral;
+    text-decoration: none;
+
+    img {
+      height: 44px;
+      width: auto;
+    }
+
+    .brand-text {
+      color: $coral;
+      font-size: 1.6rem;
+      letter-spacing: -0.5px;
+    }
+  }
+
+  .nav-link {
+    color: $navy;
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 0.4rem 0.9rem;
+    border-radius: $border-radius-pill;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+
+    i {
+      font-size: 0.9em;
+      color: $coral;
+    }
+
+    &:hover, &.active {
+      color: $coral;
+      background-color: rgba($coral, 0.08);
+    }
+  }
+
+  .navbar-nav-right {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-left: auto;
+  }
+
+  .user-chip {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: $cream;
+    border: 1.5px solid #EEE8E0;
+    border-radius: $border-radius-pill;
+    padding: 0.35rem 0.75rem 0.35rem 0.4rem;
+    cursor: pointer;
+    text-decoration: none;
+    color: $navy;
+    font-weight: 600;
+    font-size: 0.875rem;
+    transition: all 0.2s;
+
+    &:hover {
+      border-color: $coral;
+      background-color: rgba($coral, 0.06);
+      color: $coral;
+    }
+
+    .user-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, $coral, $yellow);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 0.75rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+  }
+
+  .user-avatar-lg {
+    width: 44px !important;
+    height: 44px !important;
+    font-size: 1.1rem !important;
+    flex-shrink: 0;
+  }
+
+  .dropdown-header-info {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 0.75rem 0.5rem;
+  }
+
+  .dropdown-menu {
+    border: none;
+    box-shadow: $box-shadow-lg;
+    border-radius: $border-radius-xl;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    min-width: 240px;
+
+    .dropdown-item {
+      border-radius: $border-radius;
+      padding: 0.5rem 0.75rem;
+      font-weight: 500;
+      color: $navy;
+      transition: all 0.15s;
+
+      i {
+        width: 18px;
+        color: $gray;
+      }
+
+      &:hover {
+        background-color: rgba($coral, 0.08);
+        color: $coral;
+
+        i { color: $coral; }
+      }
+
+      &.text-danger {
+        color: $danger-red !important;
+
+        i { color: $danger-red; }
+
+        &:hover {
+          background-color: rgba($danger-red, 0.08);
+        }
+      }
+    }
+
+    .dropdown-divider {
+      margin: 0.35rem 0.5rem;
+      border-color: #F0EBE3;
+    }
+  }
+}
+
+// ── Bottom tab bar (mobile) ──
+.bottom-tab-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1030;
+  background: $white;
+  border-top: 1px solid #F0EBE3;
+  box-shadow: 0 -4px 16px rgba(26, 43, 74, 0.08);
+  display: flex;
+  align-items: stretch;
+  height: 62px;
+  padding-bottom: env(safe-area-inset-bottom); // iPhone notch
+}
+
+.bottom-tab {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  color: #9CA3AF;
+  text-decoration: none;
+  font-size: 0.78rem;
+  font-weight: 600;
+  transition: color 0.15s;
+  padding: 0.4rem 0.25rem;
+
+  i, span:first-child {
+    font-size: 1.56rem;
+    display: block;
+  }
+
+  &.active {
+    color: $coral;
+  }
+
+  &:hover {
+    color: $coral;
+  }
+}
+
+// Espace sous le contenu pour ne pas être caché par la bottom bar
+@media (max-width: 767px) {
+  body {
+    padding-bottom: 62px;
+    overflow-x: hidden;
+  }
+
+  // Réduit les marges verticales des containers sur mobile
+  .container.py-4 {
+    padding-top: 0.75rem !important;
+    padding-bottom: 0.75rem !important;
+  }
+
+  .container.py-4 > .mb-3:last-child,
+  .container.py-4 > .mb-4:last-child {
+    margin-bottom: 0 !important;
+  }
+}

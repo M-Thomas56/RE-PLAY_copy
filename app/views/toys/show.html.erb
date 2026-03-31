@@ -1,0 +1,159 @@
+<% content_for :title, "Jouet N°#{@toy.id} · RE-PLAY" %>
+<% if @toy.photo.attached? && @toy.price.nil? %>
+  <script>
+    var key = "toy_reload_<%= @toy.id %>_<%= @toy.updated_at.to_i %>";
+    var count = parseInt(sessionStorage.getItem(key) || "0");
+    if (count < 5) {
+      sessionStorage.setItem(key, count + 1);
+      setTimeout(function() { location.reload(); }, 4000);
+    }
+  </script>
+<% end %>
+<div class="container py-4">
+  <%= link_to toys_path, class: "btn-back-boxes mb-3 d-inline-block" do %>
+    <i class="fa-solid fa-circle-arrow-left"></i>
+    <i class="fa-solid fa-puzzle-piece btn-back-context-icon"></i>
+  <% end %>
+
+  <div class="row g-4">
+    <div class="col-12 col-md-5">
+      <div class="toy-show-photo-wrap">
+        <% if @toy.photo.attached? %>
+          <%= image_tag @toy.photo, class: "detail-card-photo" %>
+        <% else %>
+          <div class="detail-card-no-photo"><i class="fa-solid fa-image"></i></div>
+        <% end %>
+        <% if @toy.price.present? %>
+          <div class="toy-card-price-badge"><%= @toy.price.to_i %> €</div>
+        <% elsif @toy.photo.attached? %>
+          <div class="toy-card-price-badge" style="background:rgba(0,0,0,0.45); font-size:0.65rem; padding:0.2rem 0.5rem;">
+            <i class="fa-solid fa-robot fa-spin"></i>
+          </div>
+        <% end %>
+        <% if @toy.suppr? %>
+          <span class="status-dot status-dot-deleted toy-card-status-dot" title="Jeté"></span>
+        <% elsif @toy.market? %>
+          <span class="status-dot status-dot-validated toy-card-status-dot" title="Validé"></span>
+        <% else %>
+          <span class="status-dot status-dot-waiting toy-card-status-dot" title="En attente"></span>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-7">
+      <div class="detail-card p-4 h-100">
+
+        <div class="d-flex align-items-center justify-content-between mb-2">
+          <h1 class="toy-show-title"><i class="fa-solid fa-puzzle-piece me-2"></i>N°&nbsp;<%= @toy.id %></h1>
+          <span class="toy-show-category-badge"><i class="fa-solid fa-tag me-1"></i><%= truncate(@toy.category.name, length: 18) %></span>
+        </div>
+
+        <%# Infos barcode / emplacement %>
+        <div class="toy-show-info-grid mb-2">
+          <% if @toy.barcode.present? %>
+            <div class="toy-show-info-item">
+              <i class="fa-solid fa-barcode"></i>
+              <span style="font-family: monospace;"><%= @toy.barcode %></span>
+            </div>
+          <% end %>
+          <% if @toy.location.present? && !@toy.location.include?("attente") %>
+            <div class="toy-show-info-item">
+              <i class="fa-solid fa-location-dot"></i>
+              <span><%= @toy.location %></span>
+            </div>
+          <% end %>
+        </div>
+
+        <%# Conditions %>
+        <div class="toy-show-conditions mb-2">
+          <div class="toy-show-condition-item <%= @toy.clean? ? 'ok' : 'ko' %>">
+            <i class="fa-solid fa-soap"></i>
+            <span><%= @toy.clean? ? 'Propre' : 'À nettoyer' %></span>
+          </div>
+          <div class="toy-show-condition-item <%= @toy.complete? ? 'ok' : 'ko' %>">
+            <i class="fa-solid fa-list-check"></i>
+            <span><%= @toy.complete? ? 'Complet' : 'Incomplet' %></span>
+          </div>
+          <div class="toy-show-condition-item <%= @toy.playable? ? 'ok' : 'ko' %>">
+            <i class="fa-solid fa-gamepad"></i>
+            <span><%= @toy.playable? ? 'Jouable' : 'Non jouable' %></span>
+          </div>
+        </div>
+
+        <%# Actions %>
+        <div class="toy-show-actions">
+          <% if @toy.market? %>
+            <%# Jouet validé — admins uniquement %>
+            <% if policy(@toy).verify? %>
+              <%= button_to restore_toy_path(@toy), method: :patch, class: "toy-show-btn toy-show-btn-restore", title: "Remettre en valorisation" do %>
+                <i class="fa-solid fa-rotate-left"></i>
+              <% end %>
+              <%= link_to toy_path(@toy),
+                    class: "toy-show-btn toy-show-btn-delete",
+                    title: "Supprimer",
+                    data: { turbo_method: :delete, turbo_confirm: "Supprimer ce jouet ?" } do %>
+                <i class="fa-solid fa-trash"></i>
+              <% end %>
+            <% end %>
+          <% elsif @toy.suppr? %>
+            <%# Jouet supprimé %>
+            <% if policy(@toy).restore? %>
+              <%= button_to restore_toy_path(@toy), method: :patch, class: "toy-show-btn toy-show-btn-restore", title: "Remettre en valorisation" do %>
+                <i class="fa-solid fa-rotate-left"></i>
+              <% end %>
+            <% end %>
+          <% else %>
+            <%# Jouet en attente — contrôle, modif, suppression %>
+            <% if policy(@toy).verify? %>
+              <%= link_to verify_toy_path(@toy), class: "toy-show-btn toy-show-btn-verify", title: "Contrôle qualité" do %>
+                <i class="fa-solid fa-magnifying-glass"></i>
+              <% end %>
+            <% end %>
+            <% if policy(@toy).edit? %>
+              <%= link_to edit_toy_path(@toy), class: "toy-show-btn toy-show-btn-edit", title: "Modifier" do %>
+                <i class="fa-solid fa-pen"></i>
+              <% end %>
+            <% end %>
+            <% if policy(@toy).destroy? %>
+              <%= link_to toy_path(@toy),
+                    class: "toy-show-btn toy-show-btn-delete",
+                    title: "Supprimer",
+                    data: { turbo_method: :delete, turbo_confirm: "Supprimer ce jouet ?" } do %>
+                <i class="fa-solid fa-trash"></i>
+              <% end %>
+            <% end %>
+          <% end %>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <%# Timeline %>
+  <% if @timeline.any? %>
+    <div class="row mt-3">
+      <div class="col-12">
+        <div class="toy-show-timeline-wrap">
+          <div class="toy-show-timeline-header">
+            <i class="fa-solid fa-clock-rotate-left me-2"></i>Historique
+          </div>
+          <div class="toy-show-timeline-scroll">
+            <div class="toy-show-timeline">
+              <% @timeline.each do |action| %>
+                <div class="toy-show-timeline-item">
+                  <div class="toy-show-timeline-dot"></div>
+                  <div class="toy-show-timeline-content">
+                    <span class="toy-show-timeline-date">
+                      <%= action.created_at.in_time_zone('Europe/Paris').strftime('%d/%m/%Y à %H:%M') %>
+                    </span>
+                    <span class="toy-show-timeline-text"><%= action.content %></span>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
