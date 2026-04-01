@@ -41,7 +41,7 @@ class ToysController < ApplicationController
     @toy.box = @box
 
     if @toy.save
-      PriceiaJob.perform_later(@toy.id, clean: @toy.clean, complete: @toy.complete, playable: @toy.playable)
+      @toy.update_column(:price, rand(5..15))
       Action.create!(user: current_user, actionable: @toy, content: "#{current_user.email} a créé le jouet #{@toy.id}")
       redirect_to box_path(@box), notice: "Jouet créé avec succès.", status: :see_other
     else
@@ -56,8 +56,7 @@ class ToysController < ApplicationController
 
   def update
     authorize @toy
-    if @toy.update(toy_params.merge(price: nil))
-      PriceiaJob.perform_later(@toy.id, clean: @toy.clean, complete: @toy.complete, playable: @toy.playable)
+    if @toy.update(toy_params.merge(price: rand(5..15)))
       Action.create!(user: current_user, actionable: @toy,
                      content: "#{current_user.email} a modifié le jouet n#{@toy.id}")
       if params[:from_new] == "1"
