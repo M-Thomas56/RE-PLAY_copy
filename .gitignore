@@ -36,6 +36,9 @@
 # Ignore .env file containing credentials.
 .env*
 
+# Kamal secrets
+.kamal/secrets
+
 # Ignore Mac and Linux file system files
 *.swp
 .DS_Store
